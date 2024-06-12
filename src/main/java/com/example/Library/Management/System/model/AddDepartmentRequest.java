@@ -9,13 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class AddBookRequest {
+public class AddDepartmentRequest {
     private int libraryId;
-    private int departmentId;
-    private String isbn;
-    private String title;
-    private String authorName;
-    private String genre;
-    private String publicationYear;
-    private Boolean isAvailable;
+    private String departmentName;
 }
