@@ -1,6 +1,7 @@
 package com.example.Library.Management.System.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -20,10 +21,12 @@ public class Department {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String departmentName;
-    @ManyToMany
+    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Book> bookList;
     @ManyToOne
-    @JsonBackReference
+    @JoinColumn
+    @JsonIgnore
     private Library library;
+
 }

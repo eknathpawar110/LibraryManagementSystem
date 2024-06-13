@@ -1,9 +1,8 @@
 package com.example.Library.Management.System.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,8 +24,9 @@ public class Book {
     private String genre;
     private String publicationYear;
     private Boolean isAvailable;
-    @ManyToMany
-    @JsonBackReference
-    private List<Department> departments;
+    @ManyToOne
+    @JoinColumn
+    @JsonIgnore
+    private Department department;
 
 }

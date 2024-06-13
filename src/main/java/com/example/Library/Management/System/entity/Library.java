@@ -1,5 +1,6 @@
 package com.example.Library.Management.System.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -22,4 +23,5 @@ public class Library {
     @OneToMany
     @JsonManagedReference
     private List<Department> departmentList;
+
 }
