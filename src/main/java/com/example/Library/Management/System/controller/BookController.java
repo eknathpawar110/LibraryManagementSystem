@@ -6,6 +6,7 @@ import com.example.Library.Management.System.service.BookService;
 import com.example.Library.Management.System.exception.LibraryManagementException;
 import com.example.Library.Management.System.util.ResponseCode;
 import lombok.SneakyThrows;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ public class BookController {
 
     @PostMapping("/library/addBook")
     @SneakyThrows
-    public ResponseEntity<?> addBook(@RequestBody AddBookRequest request) {
+    public ResponseEntity<?> addBook(@RequestBody @Valid AddBookRequest request) {
         try{
             return ResponseEntity.ok().body(ResponseUtil.getSuccessGenericApiResponse("Success",
                     ResponseCode.OK.name(), bookService.addBook(request)));
