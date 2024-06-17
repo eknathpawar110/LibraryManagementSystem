@@ -8,6 +8,7 @@ import com.example.Library.Management.System.model.AddBookRequest;
 import com.example.Library.Management.System.model.AddBookResponse;
 import com.example.Library.Management.System.repository.BookRepository;
 import com.example.Library.Management.System.repository.DepartmentRepository;
+import com.example.Library.Management.System.util.ResponseCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,11 +26,13 @@ public class BookService {
     public AddBookResponse addBook(AddBookRequest request) throws LibraryManagementException {
         Optional<Book> bookOptional = bookRepository.findById(request.getIsbn());
         if(bookOptional.isPresent()) {
-            LibraryManagementExceptionUtils.propagateBadRequestException("These Book is already present");
+            LibraryManagementExceptionUtils.propagateBadRequestException("These Book is already present",
+                    ResponseCode.Bad_Request);
         }
         Optional<Department> departmentOptional = departmentRepository.findById(request.getDepartmentId());
         if(departmentOptional.isEmpty()){
-            LibraryManagementExceptionUtils.propagateBadRequestException("Department is empty");
+            LibraryManagementExceptionUtils.propagateBadRequestException("Department is empty",
+                    ResponseCode.Bad_Request);
         }
         Department department = departmentOptional.get();
         Book newBook = Book.builder()
@@ -53,7 +56,8 @@ public class BookService {
     public void removeBook(String isbn) throws LibraryManagementException {
         Optional<Book> optionalBooks = bookRepository.findById(isbn);
         if(optionalBooks.isEmpty()){
-            LibraryManagementExceptionUtils.propagateBadRequestException("These book is not present in library");
+            LibraryManagementExceptionUtils.propagateBadRequestException("These book is not present in library",
+                    ResponseCode.Bad_Request);
         }
         bookRepository.deleteById(isbn);
     }
@@ -61,7 +65,8 @@ public class BookService {
     public List<Book> findBookByTitle(String title) throws LibraryManagementException {
         List<Book> booksList = bookRepository.findByTitleIgnoreCase(title);
         if(booksList.isEmpty()){
-            LibraryManagementExceptionUtils.propagateBadRequestException("Books are not present with these title");
+            LibraryManagementExceptionUtils.propagateBadRequestException("Books are not present with these title",
+                    ResponseCode.Bad_Request);
         }
         return booksList;
     }
@@ -69,7 +74,8 @@ public class BookService {
     public List<Book> findBookByAuthorName(String authorName) throws LibraryManagementException {
         List<Book> booksList = bookRepository.findByAuthorNameIgnoreCase(authorName);
         if(booksList.isEmpty()){
-            LibraryManagementExceptionUtils.propagateBadRequestException("Books are not present with these author name");
+            LibraryManagementExceptionUtils.propagateBadRequestException("Books are not present with these author name",
+                    ResponseCode.Bad_Request);
         }
         return booksList;
     }

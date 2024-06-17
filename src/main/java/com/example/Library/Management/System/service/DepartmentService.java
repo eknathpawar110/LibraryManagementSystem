@@ -7,6 +7,7 @@ import com.example.Library.Management.System.exception.LibraryManagementExceptio
 import com.example.Library.Management.System.model.AddDepartmentRequest;
 import com.example.Library.Management.System.repository.DepartmentRepository;
 import com.example.Library.Management.System.repository.LibraryRepositroy;
+import com.example.Library.Management.System.util.ResponseCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,8 @@ public class DepartmentService {
     public String addDepartment(AddDepartmentRequest request) throws LibraryManagementException {
         Optional<Library> libraryOptional = libraryRepositroy.findById(request.getLibraryId());
         if(libraryOptional.isEmpty()){
-            LibraryManagementExceptionUtils.propagateBadRequestException("These library is not present");
+            LibraryManagementExceptionUtils.propagateBadRequestException("These library is not present",
+                    ResponseCode.Bad_Request);
         }
         Library library = libraryOptional.get();
         Department department = Department.builder()
@@ -41,7 +43,7 @@ public class DepartmentService {
     public Department getDepartment(int depId) throws LibraryManagementException {
         Optional<Department> departmentOptional = departmentRepository.findById(depId);
         if(departmentOptional.isEmpty()){
-            LibraryManagementExceptionUtils.propagateBadRequestException("These department is not present");
+            LibraryManagementExceptionUtils.propagateBadRequestException("These department is not present", ResponseCode.Bad_Request);
         }
         return departmentOptional.get();
     }
